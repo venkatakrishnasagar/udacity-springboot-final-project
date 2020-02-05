@@ -1,0 +1,40 @@
+1. sudo yum install docker
+2. Add User gropu to Docker
+sudo usermod -a -G docker $USER
+3. Start Docker
+sudo service docker start
+4. Run Docker Image and provides container ID
+docker run --rm -u root -d --name jenkins -p 8080:8080 -v jenkins-data:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v "$HOME":/home jenkinsci/blueocean
+4. Open Jenkins
+docker exec -it jenkins bash
+5. Install Maven
+apk add maven
+6. Generate SSH Keys
+ssh-keygen -t rsa
+7. Get SSH Key
+cat /root/.ssh/id_rsa
+8. Go to AWS instance with 8080 port
+9. cat /var/jenkins_home/secrets/initialAdminPassword -> Copy password and use it to login jenkins
+10. Jenkins URL: http://ec2-18-188-245-240.us-east-2.compute.amazonaws.com:8080/
+
+Jenkins Portal:
+1. Go to credentials -> global -> Add Credentials -> SSH user name with private key -> Enter Directly
+
+GIT:
+1. Add Public Key in to GIT Repository
+repository -> settings -> Deploy Keys -> Add Deploy Key
+2. Deploy Key -> Got to Putty terminal
+cd /root/.ssh/
+cat rsa.pub
+
+
+PipeLine Setup Done
+
+
+Git to Jenkins connect:
+1. Jenkins -> create new jobs -> enter item name -> select free style project
+2. select  git
+3. add repository url and select Key
+4. Build -> Add Build Step -> Invoke Top level Maven Targets
+5. POM -> give branch URL
+6. add package to goals
